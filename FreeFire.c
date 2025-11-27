@@ -100,6 +100,39 @@ void listarItens()
     printf("---------------------------------------------\n\n");
 }
 
+// Função para buscar um item pelo nome (busca sequencial)
+void buscarItemPorNome()
+{
+    if (numItens == 0)
+    {
+        printf("Mochila vazia. Nenhum item para buscar.\n");
+        return;
+    }
+
+    char nome[50];
+    printf("Digite o nome do item que deseja buscar: ");
+    scanf("%s", nome);
+
+    int encontrado = 0;
+    for (int i = 0; i < numItens; i++)
+    {
+        if (strcmp(mochila[i].nome, nome) == 0)
+        {
+            printf("\nItem encontrado!\n");
+            printf("Nome: %s\n", mochila[i].nome);
+            printf("Tipo: %s\n", mochila[i].tipo);
+            printf("Quantidade: %d\n", mochila[i].quantidade);
+            encontrado = 1;
+            break;
+        }
+    }
+
+    if (!encontrado)
+    {
+        printf("Item '%s' não encontrado na mochila.\n", nome);
+    }
+}
+
 // Função principal com menu interativo
 int main()
 {
@@ -113,34 +146,26 @@ int main()
 
     // A estrutura switch trata cada opção chamando a função correspondente.
     // A ordenação e busca binária exigem que os dados estejam bem organizados.
+    
     int opcao;
 
-    do
-    {
+    do {
         printf("===== MENU =====\n");
         printf("1. Adicionar item\n");
         printf("2. Remover item\n");
         printf("3. Listar itens\n");
+        printf("4. Buscar item por nome\n");
         printf("0. Sair\n");
         printf("Escolha uma opção: ");
         scanf("%d", &opcao);
 
-        switch (opcao)
-        {
-        case 1:
-            adicionarItem();
-            break;
-        case 2:
-            removerItem();
-            break;
-        case 3:
-            listarItens();
-            break;
-        case 0:
-            printf("Saindo...\n");
-            break;
-        default:
-            printf("Opção inválida!\n");
+        switch (opcao) {
+            case 1: adicionarItem(); break;
+            case 2: removerItem(); break;
+            case 3: listarItens(); break;
+            case 4: buscarItemPorNome(); break;
+            case 0: printf("Saindo...\n"); break;
+            default: printf("Opção inválida!\n");
         }
     } while (opcao != 0);
 
