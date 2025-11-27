@@ -8,7 +8,101 @@
 // Este programa simula o gerenciamento avançado de uma mochila com componentes coletados durante a fuga de uma ilha.
 // Ele introduz ordenação com critérios e busca binária para otimizar a gestão dos recursos.
 
-int main() {
+#define MAX_ITENS 10
+
+// Estrutura que representa um item da mochila
+typedef struct
+{
+    char nome[50];
+    char tipo[30];
+    int quantidade;
+} Item;
+
+// Vetor estático para armazenar os itens
+Item mochila[MAX_ITENS];
+int numItens = 0;
+
+// Função para adicionar um item
+void adicionarItem()
+{
+    if (numItens >= MAX_ITENS)
+    {
+        printf("Mochila cheia! Não é possível adicionar mais itens.\n");
+        return;
+    }
+
+    Item novo;
+    printf("Digite o nome do item: ");
+    scanf("%s", novo.nome);
+    printf("Digite o tipo do item: ");
+    scanf("%s", novo.tipo);
+    printf("Digite a quantidade: ");
+    scanf("%d", &novo.quantidade);
+
+    mochila[numItens] = novo;
+    numItens++;
+
+    printf("Item adicionado com sucesso!\n");
+}
+
+// Função para remover um item pelo nome
+void removerItem()
+{
+    char nome[50];
+    printf("Digite o nome do item a remover: ");
+    scanf("%s", nome);
+
+    int encontrado = -1;
+    for (int i = 0; i < numItens; i++)
+    {
+        if (strcmp(mochila[i].nome, nome) == 0)
+        {
+            encontrado = i;
+            break;
+        }
+    }
+
+    if (encontrado == -1)
+    {
+        printf("Item não encontrado.\n");
+        return;
+    }
+
+    // Reorganiza o vetor para preencher a lacuna
+    for (int i = encontrado; i < numItens - 1; i++)
+    {
+        mochila[i] = mochila[i + 1];
+    }
+    numItens--;
+
+    printf("Item removido com sucesso!\n");
+}
+
+// Função para listar todos os itens
+void listarItens()
+{
+    if (numItens == 0)
+    {
+        printf("Mochila vazia.\n");
+        return;
+    }
+
+    printf("\n===== Itens na Mochila =====\n");
+    printf("%-20s %-15s %-10s\n", "Nome", "Tipo", "Quantidade");
+    printf("---------------------------------------------\n");
+    for (int i = 0; i < numItens; i++)
+    {
+        printf("%-20s %-15s %-10d\n",
+               mochila[i].nome,
+               mochila[i].tipo,
+               mochila[i].quantidade);
+    }
+    printf("---------------------------------------------\n\n");
+}
+
+// Função principal com menu interativo
+int main()
+{
     // Menu principal com opções:
     // 1. Adicionar um item
     // 2. Remover um item
@@ -19,6 +113,36 @@ int main() {
 
     // A estrutura switch trata cada opção chamando a função correspondente.
     // A ordenação e busca binária exigem que os dados estejam bem organizados.
+    int opcao;
+
+    do
+    {
+        printf("===== MENU =====\n");
+        printf("1. Adicionar item\n");
+        printf("2. Remover item\n");
+        printf("3. Listar itens\n");
+        printf("0. Sair\n");
+        printf("Escolha uma opção: ");
+        scanf("%d", &opcao);
+
+        switch (opcao)
+        {
+        case 1:
+            adicionarItem();
+            break;
+        case 2:
+            removerItem();
+            break;
+        case 3:
+            listarItens();
+            break;
+        case 0:
+            printf("Saindo...\n");
+            break;
+        default:
+            printf("Opção inválida!\n");
+        }
+    } while (opcao != 0);
 
     return 0;
 }

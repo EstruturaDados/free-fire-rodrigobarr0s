@@ -1,0 +1,29 @@
+# Compilados de C
+*.exe
+*.out
+*.o
+*.obj
+*.dll
+*.so
+*.dylib
+FreeFire
+FreeFire.exe
+
+# Arquivos de depuração
+*.log
+*.dbg
+
+# Diretórios de build
+/build/
+bin/
+obj/
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Arquivos temporários do sistema
+*.tmp
+*.swp
+*.swo
+*~
